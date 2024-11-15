@@ -26,7 +26,7 @@ body, html {
 
 header {
   background-color: var(--background-color);
-  padding: 20px;
+  padding: 0px;
 }
 
 header h1 {
