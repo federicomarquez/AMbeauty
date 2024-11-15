@@ -1,0 +1,162 @@
+:root {
+    --primary-color: #e22aab; 
+    --background-color: #f8e9f2; 
+    --text-color: #333333;
+    --form-background-color: #ffffff;
+    --button-color: #e22aab;
+    --button-hover-color: #d11993;
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+header {
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 36px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+header h1 span {
+    display: block;
+    font-size: 20px;
+    color: var(--text-color);
+}
+
+nav {
+    background-color: var(--primary-color);
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+article {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+article:hover {
+    transform: scale(1.05);
+}
+
+article img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+article h3 {
+    font-size: 22px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+article p {
+    margin: 5px 0;
+    color: var(--text-color);
+}
+
+button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--button-hover-color);
+}
+
+footer {
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* medida para celular */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    section {
+        flex-direction: column;
+    }
+}
+
+/* medida para tablet */
+@media (min-width: 601px) and (max-width: 1024px) {
+    header h1 {
+        font-size: 30px;
+    }
+}

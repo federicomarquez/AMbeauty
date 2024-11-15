@@ -1,0 +1,130 @@
+:root {
+    --primary-color: #e22aab; 
+    --background-color: #f8e9f2;
+    --text-color: #333333;
+    --map-border-color: #ccc;
+}
+
+* {
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+header {
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 36px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+header h1 span {
+    display: block;
+    font-size: 20px;
+    color: var(--text-color);
+}
+
+nav {
+    background-color: var(--primary-color);
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    margin-top: 20px;
+}
+
+section h2 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+section p {
+    font-size: 16px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+iframe {
+    width: 100%;
+    max-width: 600px;
+    height: 450px;
+    border: 2px solid var(--map-border-color);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Estilos responsivos para dispositivos móviles */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    iframe {
+        height: 300px;
+    }
+}
+
+/* Estilos para tablets */
+@media (min-width: 601px) and (max-width: 1024px) {
+    header h1 {
+        font-size: 30px;
+    }
+
+    iframe {
+        height: 400px;
+    }
+}
