@@ -1,9 +1,10 @@
+<!-- productos  html-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AM Beaty!</title>
+    <title>AM Beauty!</title>
     <link rel="stylesheet" href="productos.css" />
   </head>
   <body>
@@ -18,33 +19,33 @@
         </ul>
       </nav>
     </header>
-    <main>
-      <section>
-        <article>
-          <img src="crema1.jpeg" alt="Crema 1" />
-          <h3>Crema 1</h3>
-          <p>Crema para el rostro</p>
-          <p>$100</p>
-          <button>Comprar</button>
-        </article>
-        <article>
-          <img src="crema2.jpeg" alt="Crema 2" />
-          <h3>Crema 2</h3>
-          <p>Crema para el cuerpo</p>
-          <p>$200</p>
-          <button>Comprar</button>
-        </article>
-        <article>
-          <img src="crema3.jpeg" alt="Crema 3" />
-          <h3>Crema 3</h3>
-          <p>Crema para el cabello</p>
-          <p>$150</p>
-          <button>Comprar</button>
-        </article>
+    <header>
+      <div id="cart-icon-container">
+          <button id="cart-icon">
+              🛒<span id="cart-count">0</span>
+          </button>
+      </div>
+  </header>
+  
+  <main>
+      <section id="products-container" class="products-container">
+          <!-- Las tarjetas de productos se generarán aquí -->
       </section>
-    </main>
+  </main>
+  
+  <!-- Modal del carrito -->
+  <div id="cart-modal" class="hidden">
+      <div class="cart-content">
+          <h2>Carrito de Compras</h2>
+          <ul id="cart-items"></ul>
+          <button id="checkout-button">Comprar</button>
+          <button id="close-cart-modal">Cerrar</button>
+      </div>
+  </div>
+  
     <footer>
       <p>AM Beauty &copy; 2024</p>
     </footer>
   </body>
+  <script src="script.js"></script>
 </html>
