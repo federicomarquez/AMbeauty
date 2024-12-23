@@ -49,6 +49,7 @@ function displayProducts(products) {
     });
 }
 
+
 // Ejecutar la función al cargar el DOM
 document.addEventListener("DOMContentLoaded", fetchProducts);
 
@@ -70,17 +71,13 @@ function updateCartCount() {
 }
 
 // Mostrar los productos en el carrito
-function showCart() {
-    const cartModal = document.getElementById("cart-modal");
+function updateCartModal() {
     const cartItems = document.getElementById("cart-items");
-
-    // Limpiar contenido previo
     cartItems.innerHTML = "";
 
     if (cart.length === 0) {
         cartItems.innerHTML = "<p>Tu carrito está vacío</p>";
     } else {
-        // Agregar los productos al modal
         cart.forEach((product, index) => {
             const cartItem = document.createElement("li");
             cartItem.innerHTML = `
@@ -90,17 +87,15 @@ function showCart() {
             cartItems.appendChild(cartItem);
         });
     }
-
-    // Mostrar el modal
-    cartModal.classList.remove("hidden");
 }
+
 
 // Eliminar producto del carrito
 function removeFromCart(index) {
     cart.splice(index, 1);
     updateCartCount();
     saveCartToLocalStorage();
-    showCart(); // Actualizar el carrito en el modal
+    updateCartModal(); // Actualizar el carrito en el modal
 }
 
 // Función para realizar la compra
@@ -116,10 +111,6 @@ function checkout() {
     }
 }
 
-// Función para cerrar el modal
-function closeCartModal() {
-    document.getElementById("cart-modal").classList.add("hidden");
-}
 
 // Guardar el carrito en localStorage
 function saveCartToLocalStorage() {
@@ -127,9 +118,21 @@ function saveCartToLocalStorage() {
 }
 
 // Event Listeners
-document.getElementById("cart-icon").addEventListener("click", showCart);
-document.getElementById("checkout-button").addEventListener("click", checkout);
-document.getElementById("close-cart-modal").addEventListener("click", closeCartModal);
+document.getElementById("cart-icon").addEventListener("click", () => {
+    const cartModal = document.getElementById("cart-modal");
+    cartModal.classList.toggle("hidden");
+
+    // Actualiza el contenido del carrito cuando se abre
+    if (!cartModal.classList.contains("hidden")) {
+        updateCartModal();
+    }
+});
+
+document.getElementById("close-cart-modal").addEventListener("click", () => {
+    const cartModal = document.getElementById("cart-modal");
+    cartModal.classList.add("hidden");
+});
+
 
 // Función para cargar el carrito desde localStorage al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
@@ -162,3 +165,8 @@ function displayProducts(products) {
         productsContainer.appendChild(productCard);
     });
 }
+
+
+
+
+
