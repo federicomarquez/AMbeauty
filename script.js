@@ -5,19 +5,16 @@ const apiEndpoint = "http://makeup-api.herokuapp.com/api/v1/products.json";
 // Función para obtener los datos de la API
 async function fetchProducts() {
     try {
-        // Realizar la solicitud a la API
+        
         const response = await fetch(apiEndpoint);
 
-        // Validar que la respuesta sea exitosa
         if (!response.ok) {
             throw new Error(`Error al obtener los datos: ${response.status}`);
         }
 
-        // Parsear la respuesta a JSON
         const products = await response.json();
 
-        // Llamar a la función para mostrar los productos
-        displayProducts(products);
+        mostrarProductos(products);
     } catch (error) {
         console.error("Hubo un problema al cargar los productos:", error);
         const productsContainer = document.getElementById("products-container");
@@ -26,13 +23,10 @@ async function fetchProducts() {
 }
 
 // Función para mostrar los productos en tarjetas
-function displayProducts(products) {
+function mostrarProductos(products) {
     const productsContainer = document.getElementById("products-container");
-
-    // Limpiar cualquier contenido previo
     productsContainer.innerHTML = "";
-
-    // Recorrer los productos y generar tarjetas
+    // Recorrer los productos y generar tarjetas (robado a prueba)
     products.slice(0, 20).forEach((product) => {
         const productCard = document.createElement("article");
         productCard.classList.add("product-card");
@@ -44,87 +38,98 @@ function displayProducts(products) {
             <p class="product-price">Precio: ${product.price_sign || "$"}${product.price || "No disponible"}</p>
             <a href="${product.product_link}" target="_blank" class="product-link">Ver producto</a>
         `;
-
         productsContainer.appendChild(productCard);
     });
 }
 
-
-// Ejecutar la función al cargar el DOM
 document.addEventListener("DOMContentLoaded", fetchProducts);
-
-// Variables globales
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Función para añadir producto al carrito
-function addToCart(product) {
-    cart.push(product);
-    updateCartCount();
-    saveCartToLocalStorage();
-    alert(`${product.name} ha sido añadido al carrito`);
+function agregarCarta(product) {
+    const productoExistente = cart.find(item => item.id === product.id);
+    if (productoExistente) {
+        productoExistente.quantity += 1; 
+    } else {
+        product.quantity = 1; 
+        cart.push(product);
+    }
+    actualizarContadorCartas();
+    guardadoLocalStorage();
+    alert(`${product.name} se añadio al carrito`);
 }
 
-// Actualizar el contador del carrito
-function updateCartCount() {
+function actualizarContadorCartas() {
     const cartCount = document.getElementById("cart-count");
     cartCount.textContent = cart.length;
 }
 
-// Mostrar los productos en el carrito
-function updateCartModal() {
+function actualizarModalCarrito() {
     const cartItems = document.getElementById("cart-items");
     cartItems.innerHTML = "";
 
+    //robado de internet y modificado (a prueba)
     if (cart.length === 0) {
         cartItems.innerHTML = "<p>Tu carrito está vacío</p>";
+        document.getElementById("total-price").textContent = "Total: $0";
     } else {
+        let total = 0;
         cart.forEach((product, index) => {
+            total += (product.price || 0) * product.quantity;
             const cartItem = document.createElement("li");
             cartItem.innerHTML = `
-                ${product.name} - ${product.price_sign || "$"}${product.price || "N/A"}
+                ${product.name} x${product.quantity} - ${product.price_sign || "$"}${(product.price * product.quantity).toFixed(2) || "N/A"}
                 <button onclick="removeFromCart(${index})">Eliminar</button>
             `;
             cartItems.appendChild(cartItem);
         });
+        document.getElementById("total-price").textContent = `Total: $${total.toFixed(2)}`;
     }
 }
 
-
-// Eliminar producto del carrito
-function removeFromCart(index) {
+function EliminarProductoCarrito(index) {
     cart.splice(index, 1);
-    updateCartCount();
-    saveCartToLocalStorage();
-    updateCartModal(); // Actualizar el carrito en el modal
+    actualizarContadorCartas();
+    guardadoLocalStorage();
+    actualizarModalCarrito(); 
 }
 
-// Función para realizar la compra
-function checkout() {
+function BotonSalirCarrito() {
     if (cart.length > 0) {
-        alert("¡Compra realizada con éxito!");
-        cart = []; // Limpiar el carrito
-        updateCartCount();
-        saveCartToLocalStorage();
+        showSuccessMessage("¡Compra realizada con éxito!");
+        cart = []; 
+        actualizarContadorCartas();
+        guardadoLocalStorage();
+        actualizarModalCarrito();
         document.getElementById("cart-modal").classList.add("hidden");
     } else {
         alert("El carrito está vacío.");
     }
 }
+//a prueba mejora el el mensaje en vez de un alert
+function showSuccessMessage(message) {
+    const successMessage = document.createElement("div");
+    successMessage.textContent = message;
+    successMessage.className = "success-message";
+    document.body.appendChild(successMessage);
+
+    setTimeout(() => {
+        successMessage.remove();
+    }, 3000); // El mensaje desaparece después de 3 segundos
+}
+
+document.getElementById("checkout-button").addEventListener("click", BotonSalirCarrito);
 
 
-// Guardar el carrito en localStorage
-function saveCartToLocalStorage() {
+function guardadoLocalStorage() {
     localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// Event Listeners
 document.getElementById("cart-icon").addEventListener("click", () => {
     const cartModal = document.getElementById("cart-modal");
     cartModal.classList.toggle("hidden");
 
-    // Actualiza el contenido del carrito cuando se abre
     if (!cartModal.classList.contains("hidden")) {
-        updateCartModal();
+        actualizarModalCarrito();
     }
 });
 
@@ -134,15 +139,12 @@ document.getElementById("close-cart-modal").addEventListener("click", () => {
 });
 
 
-// Función para cargar el carrito desde localStorage al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-    updateCartCount(); // Actualiza el contador de carrito con el valor almacenado
+    actualizarContadorCartas(); 
 });
 
-// Generar productos con botón para añadir al carrito
-function displayProducts(products) {
+function mostrarProductos(products) {
     const productsContainer = document.getElementById("products-container");
-
     productsContainer.innerHTML = "";
 
     products.slice(0, 20).forEach((product) => {
@@ -157,9 +159,8 @@ function displayProducts(products) {
             <button class="add-to-cart-button">Añadir al carrito</button>
         `;
 
-        // Botón para añadir al carrito
         productCard.querySelector(".add-to-cart-button").addEventListener("click", () => {
-            addToCart(product);
+            agregarCarta(product);
         });
 
         productsContainer.appendChild(productCard);
