@@ -40,6 +40,46 @@ function mostrarProductos(products) {
         `;
         productsContainer.appendChild(productCard);
     });
+    async function verificarImagen(url) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.src = url;
+
+        img.onload = () => resolve(true); // La imagen se cargó correctamente
+        img.onerror = () => resolve(false); // La imagen está rota o no existe
+    });
+}
+
+async function mostrarProductos(products) {
+    const productsContainer = document.getElementById("products-container");
+    productsContainer.innerHTML = "";
+
+    for (const product of products.slice(0, 20)) { 
+        if (product.image_link) { 
+            const imagenValida = await verificarImagen(product.image_link);
+
+            if (imagenValida) {
+                const productCard = document.createElement("article");
+                productCard.classList.add("product-card");
+
+                productCard.innerHTML = `
+                    <img src="${product.image_link}" alt="${product.name}" class="product-image" />
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-brand">Marca: ${product.brand || "Desconocida"}</p>
+                    <p class="product-price">Precio: ${product.price_sign || "$"}${product.price || "No disponible"}</p>
+                    <button class="add-to-cart-button">Añadir al carrito</button>
+                `;
+
+                productCard.querySelector(".add-to-cart-button").addEventListener("click", () => {
+                    agregarCarta(product);
+                });
+
+                productsContainer.appendChild(productCard);
+            }
+        }
+    }
+}
+
 }
 
 document.addEventListener("DOMContentLoaded", fetchProducts);
@@ -114,7 +154,7 @@ function showSuccessMessage(message) {
 
     setTimeout(() => {
         successMessage.remove();
-    }, 3000); // El mensaje desaparece después de 3 segundos
+    }, 3000); 
 }
 
 document.getElementById("checkout-button").addEventListener("click", BotonSalirCarrito);
@@ -152,7 +192,7 @@ function mostrarProductos(products) {
         productCard.classList.add("product-card");
 
         productCard.innerHTML = `
-            <img src="${product.image_link}" alt="${product.name}" class="product-image" />
+            <img src="${product.image_link, product.api_featured_image}" alt="${product.name}" class="product-image" />
             <h3 class="product-name">${product.name}</h3>
             <p class="product-brand">Marca: ${product.brand || "Desconocida"}</p>
             <p class="product-price">Precio: ${product.price_sign || "$"}${product.price || "No disponible"}</p>
