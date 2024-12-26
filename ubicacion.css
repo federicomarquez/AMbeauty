@@ -11,12 +11,21 @@
     box-sizing: border-box;
 }
 
-body {
+body, html {
+    height: 100%;
     font-family: Arial, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     text-align: center;
-}
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+  }
 
 header {
     background-color: var(--background-color);
@@ -61,6 +70,7 @@ nav ul li a:hover {
 }
 
 main {
+    flex: 1;
     padding: 20px;
 }
 

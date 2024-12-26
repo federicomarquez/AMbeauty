@@ -22,33 +22,7 @@ async function fetchProducts() {
     }
 }
 
-// Función para mostrar los productos en tarjetas
-function mostrarProductos(products) {
-    const productsContainer = document.getElementById("products-container");
-    productsContainer.innerHTML = "";
-    // Recorrer los productos y generar tarjetas (robado a prueba)
-    products.slice(0, 20).forEach((product) => {
-        const productCard = document.createElement("article");
-        productCard.classList.add("product-card");
 
-        productCard.innerHTML = `
-            <img src="${product.image_link}" alt="${product.name}" class="product-image" />
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-brand">Marca: ${product.brand || "Desconocida"}</p>
-            <p class="product-price">Precio: ${product.price_sign || "$"}${product.price || "No disponible"}</p>
-            <a href="${product.product_link}" target="_blank" class="product-link">Ver producto</a>
-        `;
-        productsContainer.appendChild(productCard);
-    });
-    async function verificarImagen(url) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.src = url;
-
-        img.onload = () => resolve(true); // La imagen se cargó correctamente
-        img.onerror = () => resolve(false); // La imagen está rota o no existe
-    });
-}
 
 async function mostrarProductos(products) {
     const productsContainer = document.getElementById("products-container");
@@ -80,7 +54,7 @@ async function mostrarProductos(products) {
     }
 }
 
-}
+
 
 document.addEventListener("DOMContentLoaded", fetchProducts);
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -118,7 +92,7 @@ function actualizarModalCarrito() {
             const cartItem = document.createElement("li");
             cartItem.innerHTML = `
                 ${product.name} x${product.quantity} - ${product.price_sign || "$"}${(product.price * product.quantity).toFixed(2) || "N/A"}
-                <button onclick="removeFromCart(${index})">Eliminar</button>
+                <button onclick="EliminarProductoCarrito(${index})">Eliminar</button>
             `;
             cartItems.appendChild(cartItem);
         });
@@ -211,3 +185,36 @@ function mostrarProductos(products) {
 
 
 
+
+
+/*
+
+// Función para mostrar los productos en tarjetas
+function mostrarProductos(products) {
+    const productsContainer = document.getElementById("products-container");
+    productsContainer.innerHTML = "";
+    // Recorrer los productos y generar tarjetas (robado a prueba)
+    products.slice(0, 20).forEach((product) => {
+        const productCard = document.createElement("article");
+        productCard.classList.add("product-card");
+
+        productCard.innerHTML = `
+            <img src="${product.image_link}" alt="${product.name}" class="product-image" />
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-brand">Marca: ${product.brand || "Desconocida"}</p>
+            <p class="product-price">Precio: ${product.price_sign || "$"}${product.price || "No disponible"}</p>
+            <a href="${product.product_link}" target="_blank" class="product-link">Ver producto</a>
+        `;
+        productsContainer.appendChild(productCard);
+    });
+    async function verificarImagen(url) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.src = url;
+
+        img.onload = () => resolve(true); // La imagen se cargó correctamente
+        img.onerror = () => resolve(false); // La imagen está rota o no existe
+    });
+}
+}
+*/
